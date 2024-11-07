@@ -1,7 +1,7 @@
 resource "spacelift_policy" "pr_messaging" {
   name = "PR Push commenting"
   body = file("policies/pr_messaging.rego")
-  type = "PUSH"
+  type = "GIT_PUSH"
 }
 
 resource "spacelift_policy_attachment" "pr_messaging" {
