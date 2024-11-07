@@ -3,7 +3,7 @@ resource "spacelift_stack" "spacelift_testing" {
   branch                           = "main"
   repository                       = "spacelift-testing"
   description                      = "Test job for determining current state and usefulness of Spacelift.io"
-  project_root                     = spacelift_space.poc.name
+  space_id                         = spacelift_space.poc.name
   labels                           = ["autoattach:pr_feedback"]
   administrative                   = false
   manage_state                     = true
