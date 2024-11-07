@@ -19,7 +19,7 @@ resource "spacelift_stack" "spacelift_testing" {
 }
 
 resource "spacelift_aws_integration_attachment" "spacelift_testing" {
-  integration_id = spacelift_aws_integration.this.id
+  integration_id = spacelift_aws_integration.aws.id
   stack_id       = spacelift_stack.spacelift_testing.id
   read           = true
   write          = true
