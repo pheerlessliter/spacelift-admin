@@ -11,6 +11,9 @@ resource "spacelift_stack" "spacelift_testing" {
   enable_local_preview             = true
   enable_well_known_secret_masking = true
   github_action_deploy             = true
+  github_enterprise {
+    namespace = "pheerlessliter"
+  }
   terragrunt {
     terraform_version      = "1.5.7"
     terragrunt_version     = "0.68.7"
