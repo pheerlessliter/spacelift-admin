@@ -6,11 +6,16 @@ locals {
 }
 
 resource "spacelift_aws_integration" "aws" {
-  name = local.role_name
-
-  # We need to set the ARN manually rather than referencing the role to avoid a circular dependency
+  name                           = local.role_name
   role_arn                       = local.role_arn
   generate_credentials_in_worker = false
+}
+
+data "spacelift_aws_integration_attachment_external_id" "spacelift_testing" {
+  integration_id = spacelift_aws_integration.aws.id
+  stack_id       = spacelift_stack.spacelift_testing.id
+  read           = true
+  write          = true
 }
 
 resource "aws_iam_role" "spacelift" {
@@ -19,8 +24,12 @@ resource "aws_iam_role" "spacelift" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-      jsondecode(data.spacelift_aws_integration_attachment_external_id.my_stack.assume_role_policy_statement),
-      jsondecode(data.spacelift_aws_integration_attachment_external_id.my_module.assume_role_policy_statement),
+      jsondecode(data.spacelift_aws_integration_attachment_external_id.spacelift_testing.assume_role_policy_statement),
     ]
   })
+}
+
+resource "aws_iam_role_policy_attachment" "spacelift" {
+  role       = aws_iam_role.spacelift.name
+  policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess"
 }

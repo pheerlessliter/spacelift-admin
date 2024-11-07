@@ -6,7 +6,7 @@ resource "spacelift_stack" "spacelift_testing" {
   project_root                     = spacelift_space.poc.name
   administrative                   = false
   manage_state                     = true
-  auto_deploy                      = true
+  autodeploy                       = true
   enable_local_preview             = true
   enable_well_known_secret_masking = true
   github_action_deploy             = true
@@ -18,9 +18,9 @@ resource "spacelift_stack" "spacelift_testing" {
   }
 }
 
-resource "spacelift_aws_integration_attachment" "this" {
+resource "spacelift_aws_integration_attachment" "spacelift_testing" {
   integration_id = spacelift_aws_integration.this.id
-  stack_id       = spacelift_stack.spacelift_testing.name
+  stack_id       = spacelift_stack.spacelift_testing.id
   read           = true
   write          = true
 
